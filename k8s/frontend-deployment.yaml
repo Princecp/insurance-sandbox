@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: insurance-frontend
+  namespace: insurance-sandbox
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: insurance-frontend
+  template:
+    metadata:
+      labels:
+        app: insurance-frontend
+    spec:
+      imagePullSecrets:
+        - name: scw-registry-secret
+
+      containers:
+        - name: frontend
+          image: rg.fr-par.scw.cloud/insurance-sandbox/frontend:sandbox
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "300m"
+              memory: "256Mi"
+

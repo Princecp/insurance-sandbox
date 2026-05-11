@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: insurance-backend
+  namespace: insurance-sandbox
+spec:
+  type: ClusterIP
+  selector:
+    app: insurance-backend
+  ports:
+    - port: 80
+      targetPort: 5000
