@@ -97,6 +97,7 @@ git commit -m "k8s + app"
 # Configurer ton identité Git
 
 git config --global user.name "MBENGUE ADAMA Prince"
+
 git config --global user.email "prenom.nom@maif.fr"
 
 # Corriger un commit invalide
@@ -187,9 +188,11 @@ Download for Mac Apple silicon pour M1, 2, 3 ou M4
 # Quand le fichier est téléchargé :
 
 Ouvre le fichier .dmg
+
 Glisse Docker.app dans : Applications
 
 # Sinon:
+
 # Lancer Docker dans terminal
 
 open /Applications/Docker.app
@@ -211,11 +214,13 @@ docker buildx build --platform linux/amd64 -t frontend:sandbox ./frontend --load
  # Tag des images
 
 docker tag backend:sandbox rg.fr-par.scw.cloud/insurance-sandbox/backend:sandbox
+
 docker tag frontend:sandbox rg.fr-par.scw.cloud/insurance-sandbox/frontend:sandbox
 
 # Push vers Scaleway
 
 docker push rg.fr-par.scw.cloud/insurance-sandbox/backend:sandbox
+
 docker push rg.fr-par.scw.cloud/insurance-sandbox/frontend:sandbox
 
 # Créer un repo github.com à partir du lien suivant
@@ -223,27 +228,35 @@ docker push rg.fr-par.scw.cloud/insurance-sandbox/frontend:sandbox
 Création d'un compte Github.com - Cloud Platform Public - Azure
 
 # Vérifier état des fichiers
+
 git status
 
 # Ajouter modifications
+
 git add .
 
 # Commit
+
 git commit -m "update docker images"
 
 # Envoyer vers GitHub
+
 git push origin main
 
 # Installer ArgoCD CLI
+
 brew install argocd
 
 # Ajouter le repository GitHub (source GitOps)
+
 argocd repo add https://github.com/Princecp/insurance-sandbox.git
 
 # Vérifier que les pods ArgoCD sont en fonctionnement
+
 kubectl get pods -n argocd
 
 # Vérifier application ArgoCD
+
 argocd app get insurance
 
 # Vérifier ton namespace app
