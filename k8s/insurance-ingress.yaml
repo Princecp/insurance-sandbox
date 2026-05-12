@@ -11,10 +11,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - 51.158.73.16.nip.io
+        - 51.158.74.49.nip.io 
       secretName: insurance-tls
   rules:
-    - host: 51.158.73.16.nip.io
+    - host: 51.158.74.49.nip.io 
       http:
         paths:
           - path: /
