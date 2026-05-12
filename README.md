@@ -415,6 +415,49 @@ kubectl apply -f argocd-ingress.yaml
 
 https://argocd.51.158.74.49.nip.io
 
+# Télécharger Docker Desktop si pas fait
+
+https://www.docker.com/products/docker-desktop/
+
+# clique sur
+
+Download for Mac Apple silicon pour M1, 2, 3 ou M4
+
+# Quand le fichier est téléchargé :
+
+Ouvre le fichier .dmg
+Glisse Docker.app dans : Applications
+
+# Sinon:
+# Lancer Docker dans terminal
+
+open /Applications/Docker.app
+
+# Test
+
+docker ps
+
+cd insurance-sandbox 
+
+# forcer l’architecture compatible cluster (AMD64): erreur no match for platform
+
+ docker buildx build --platform linux/amd64 -t backend:sandbox ./backend --load
+
+# forcer l’architecture compatible cluster (AMD64): erreur no match for platform
+
+docker buildx build --platform linux/amd64 -t frontend:sandbox ./frontend --load
+
+ # Tag des images
+
+docker tag backend:sandbox rg.fr-par.scw.cloud/insurance-sandbox/backend:sandbox
+docker tag frontend:sandbox rg.fr-par.scw.cloud/insurance-sandbox/frontend:sandbox
+
+# Push vers Scaleway
+
+docker push rg.fr-par.scw.cloud/insurance-sandbox/backend:sandbox
+docker push rg.fr-par.scw.cloud/insurance-sandbox/frontend:sandbox
+
+
 # Vérifier ton namespace app
 
 kubectl get ns
