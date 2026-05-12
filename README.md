@@ -304,6 +304,117 @@ helm install argocd argo/argo-cd \
 
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 
+# Dans un navigateur
+
+https://localhost:8080/
+
+# se connecter à ArgoCD récupérer mot de passe 
+
+kubectl -n argocd get secret argocd-initial-admin-secret \
+-o jsonpath="{.data.password}" | base64 -d
+
+dTY-jkVsQ5Cdb8vZ%
+
+# Créer repo dans
+
+github.maif.io
+
+# Initialiser le repo local
+
+cd insurance-sandbox
+
+git init
+
+# Ajouter les fichiers au suivi Git
+
+git add .
+
+# Faire un commit
+
+git commit -m "k8s + app"
+
+# Configurer ton identité Git
+
+git config --global user.name "MBENGUE ADAMA Prince"
+git config --global user.email "prenom.nom@maif.fr"
+
+# Corriger un commit invalide
+
+git commit --amend --no-edit --reset-author
+
+# Ajouter le repo distant
+
+git remote add origin git@github.maif.io:prince-mbengue-adama/insurance-sandbox.git
+
+# Définir la branche principale
+
+git branch -M main
+
+# Envoyer le code vers GitHub 
+
+git push -u origin main
+
+# Appliquer ton argocd
+
+kubectl apply -f argocd-app.yaml
+
+# Pour test local dans un terminal
+
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+# Et
+
+Recharger la page argocd
+
+# Pour accéder à ArgoCD: https://argocd.51.158.74.49.nip.io sans kubectl port-forward
+
+# Vérifie
+
+kubectl get svc -n ingress-nginx
+
+# prends
+
+EXTERNAL-IP = 51.158.74.49
+
+nano argocd-ingress.yaml
+
+# Appliquer ton argocd-ingress
+
+kubectl apply -f argocd-ingress.yaml
+
+# Test ouvrir navigateur
+
+https://argocd.51.158.74.49.nip.io
+
+SelfSignedCert Blocked by SSL_SELF_SIGNED
+
+# On ajoute un certificat réel
+
+nano argocd-cert.yaml
+
+# Appliquer ton argocd-cert
+
+kubectl apply -f argocd-cert.yaml
+
+# Modifier ingress pour HTTPS
+
+nano argocd-ingress.yaml
+
+# Ajouter
+
+tls:
+- hosts:
+  - argocd.51.158.74.49.nip.io
+  secretName: argocd-tls
+
+# Appliquer
+
+kubectl apply -f argocd-ingress.yaml
+
+# Ouvrir navigateur 
+
+https://argocd.51.158.74.49.nip.io
+
 # Vérifier ton namespace app
 
 kubectl get ns
