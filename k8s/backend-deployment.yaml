@@ -4,7 +4,7 @@ metadata:
   name: insurance-backend
   namespace: insurance-sandbox
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: insurance-backend
