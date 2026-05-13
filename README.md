@@ -78,7 +78,7 @@ dTY-jkVsQ5Cdb8vZ%
 
 # Créer repo dans
 
-github.maif.io
+github.com
 
 # Initialiser le repo local
 
@@ -106,7 +106,7 @@ git commit --amend --no-edit --reset-author
 
 # Ajouter le repo distant
 
-git remote add origin git@github.maif.io:prince-mbengue-adama/insurance-sandbox.git
+git remote add origin git@github.com/Princecp/insurance-sandbox.git
 
 # Définir la branche principale
 
