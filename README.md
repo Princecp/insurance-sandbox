@@ -118,6 +118,8 @@ git push -u origin main
 
 # Appliquer ton argocd
 
+cd insurance-sandbox/argocd
+
 kubectl apply -f argocd-app.yaml
 
 # Pour test local dans un terminal
@@ -138,9 +140,13 @@ kubectl get svc -n ingress-nginx
 
 EXTERNAL-IP = 51.158.74.49
 
+cd insurance-sandbox/argocd
+
 nano argocd-ingress.yaml
 
 # Appliquer ton argocd-ingress
+
+cd insurance-sandbox/argocd
 
 kubectl apply -f argocd-ingress.yaml
 
@@ -152,13 +158,19 @@ SelfSignedCert Blocked by SSL_SELF_SIGNED
 
 # On ajoute un certificat réel
 
+cd insurance-sandbox/argocd
+
 nano argocd-cert.yaml
 
 # Appliquer ton argocd-cert
 
+cd insurance-sandbox/argocd
+
 kubectl apply -f argocd-cert.yaml
 
 # Modifier ingress pour HTTPS
+
+cd insurance-sandbox/argocd
 
 nano argocd-ingress.yaml
 
@@ -170,6 +182,8 @@ tls:
   secretName: argocd-tls
 
 # Appliquer
+
+cd insurance-sandbox/argocd
 
 kubectl apply -f argocd-ingress.yaml
 
