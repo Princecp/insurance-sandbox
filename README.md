@@ -1,6 +1,26 @@
-Insurance Sandbox – Déploiement Kubernetes
+##############################################
+# Insurance Sandbox – Déploiement Kubernetes #
+##############################################
 
-# Consulter état nodes
+# Description :
+
+# Cette procédure met en place une architecture complète basée sur Kubernetes et GitOps.
+
+# Elle inclut :
+# - Installation de l’infrastructure (Ingress, cert-manager, ArgoCD)
+# - Configuration TLS automatique (Let’s Encrypt)
+# - Déploiement d’une application via ArgoCD
+# - Utilisation de Git comme source de vérité
+
+# Workflow final :
+# Build Docker → Push registry → Push Git → ArgoCD déploie automatiquement
+
+# IMPORTANT :
+# - Ne pas utiliser kubectl apply pour les ressources applicatives (k8s/*
+# - ArgoCD gère tout après application du fichier application.yaml
+#####################################################################################
+
+# Vérifier le cluster
 
 kubectl get nodes
 
@@ -69,12 +89,16 @@ kubectl port-forward svc/argocd-server -n argocd 8080:443
 
 https://localhost:8080/
 
-# se connecter à ArgoCD récupérer mot de passe 
+# Se connecter à ArgoCD récupérer mot de passe 
 
 kubectl -n argocd get secret argocd-initial-admin-secret \
 -o jsonpath="{.data.password}" | base64 -d
 
-dTY-jkVsQ5Cdb8vZ%
+Exemple: dTY-jkVsQ5Cdb8vZ%
+
+# Installer ArgoCD CLI
+
+brew install argocd
 
 # Créer repo dans
 
@@ -100,10 +124,6 @@ git config --global user.name "MBENGUE ADAMA Prince"
 
 git config --global user.email "prenom.nom@maif.fr"
 
-# Corriger un commit invalide
-
-git commit --amend --no-edit --reset-author
-
 # Ajouter le repo distant
 
 git remote add origin git@github.com/Princecp/insurance-sandbox.git
@@ -115,81 +135,6 @@ git branch -M main
 # Envoyer le code vers GitHub 
 
 git push -u origin main
-
-# Appliquer ton argocd
-
-cd insurance-sandbox/argocd
-
-kubectl apply -f argocd-app.yaml
-
-# Pour test local dans un terminal
-
-kubectl port-forward svc/argocd-server -n argocd 8080:443
-
-# Et
-
-Recharger la page argocd
-
-# Pour accéder à ArgoCD: https://argocd.51.158.74.49.nip.io sans kubectl port-forward
-
-# Vérifie
-
-kubectl get svc -n ingress-nginx
-
-# prends
-
-EXTERNAL-IP = 51.158.74.49
-
-cd insurance-sandbox/argocd
-
-nano argocd-ingress.yaml
-
-# Appliquer ton argocd-ingress
-
-cd insurance-sandbox/argocd
-
-kubectl apply -f argocd-ingress.yaml
-
-# Test ouvrir navigateur
-
-https://argocd.51.158.74.49.nip.io
-
-SelfSignedCert Blocked by SSL_SELF_SIGNED
-
-# On ajoute un certificat réel
-
-cd insurance-sandbox/argocd
-
-nano argocd-cert.yaml
-
-# Appliquer ton argocd-cert
-
-cd insurance-sandbox/argocd
-
-kubectl apply -f argocd-cert.yaml
-
-# Modifier ingress pour HTTPS
-
-cd insurance-sandbox/argocd
-
-nano argocd-ingress.yaml
-
-# Ajouter
-
-tls:
-- hosts:
-  - argocd.51.158.74.49.nip.io
-  secretName: argocd-tls
-
-# Appliquer
-
-cd insurance-sandbox/argocd
-
-kubectl apply -f argocd-ingress.yaml
-
-# Ouvrir navigateur 
-
-https://argocd.51.158.74.49.nip.io
 
 # Télécharger Docker Desktop si pas fait
 
@@ -257,13 +202,25 @@ git commit -m "update docker images"
 
 git push origin main
 
-# Installer ArgoCD CLI
+# Appliquer ton argocd
 
-brew install argocd
+cd insurance-sandbox/argocd
 
-# Ajouter le repository GitHub (source GitOps)
+kubectl apply -f application.yaml
+
+# Pour accéder à ArgoCD: https://argocd.51.158.74.49.nip.io sans kubectl port-forward
+
+# Test ouvrir navigateur
+
+https://argocd.51.158.74.49.nip.io
+
+# Ajouter le repository GitHub (source GitOps) si privé
 
 argocd repo add https://github.com/Princecp/insurance-sandbox.git
+
+# Afficher tous les pods du ns
+
+kubectl get pods -n insurance-sandbox
 
 # Vérifier que les pods ArgoCD sont en fonctionnement
 
