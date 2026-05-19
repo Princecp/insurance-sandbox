@@ -72,10 +72,6 @@ helm install cert-manager jetstack/cert-manager \
 
 kubectl get pods -n cert-manager
 
-# Appliquer ton ClusterIssuer
-
-kubectl apply -f k8s/cluster-issuer.yaml
-
 # Installer ARGO CD
 
 helm install argocd argo/argo-cd \
