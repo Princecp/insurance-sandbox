@@ -16,7 +16,7 @@
 # Build Docker → Push registry → Push Git → ArgoCD déploie automatiquement
 
 # IMPORTANT :
-# - Ne pas utiliser kubectl apply pour les ressources applicatives (k8s/*
+# - Ne pas utiliser kubectl apply pour les ressources applicatives (k8s/*)
 # - ArgoCD gère tout après application du fichier application.yaml
 #####################################################################################
 
