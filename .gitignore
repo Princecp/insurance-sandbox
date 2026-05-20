@@ -1,0 +1,13 @@
+.env
+.env.*
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+crash.log
+.kube/
+
+
+# Terraform secrets
+*.tfvars
+*.tfvars.json
